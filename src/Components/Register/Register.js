@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import {useForm} from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { authProvider } from '../../Contexts/UserContext'
 
 const Register = () => {
     const {createUser} = useContext(authProvider)
     const {register, handleSubmit, formState:{errors}} = useForm();
+    const navigate = useNavigate()
 
 
     const handleRegister  = (data)=>{
@@ -13,7 +14,7 @@ const Register = () => {
         console.log(data.email,data.password)
         createUser(data.email , data.password)
         .then(result => {
-            console.log(result.user)
+            navigate('/home')
         })
         .catch(err => console.error(err))
     }
@@ -21,6 +22,7 @@ const Register = () => {
   return (
     <div>
         <form className="mx-auto border-2 p-5 rounded-md mt-14 text-left w-1/2" onSubmit={handleSubmit(handleRegister)}>
+            <h3 className='text-2xl font-semibold text-center my-3'>Register</h3>
           <div className="form-control w-full ">
             <label className="label">
               <span className="label-text">Name</span>
